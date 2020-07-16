@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- sys_organization 用户机构 -->
+<mapper namespace="com.onesuo.app.dao.certs.OrganizationDao">
+	<resultMap id="entityResultMap" type="com.onesuo.app.model.Organization">
+		<id property="id" column="id" />
+		<result property="isDeleted" column="is_deleted" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+		<result property="parentId" column="parent_id" />
+		<result property="orgPath" column="org_path" />
+		<result property="orgName" column="org_name" />
+		<result property="address" column="address" />
+		<result property="contact" column="contact" />
+		<result property="phone" column="phone" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+		`id`,`is_deleted`,`gmt_create`,`gmt_modified`,`parent_id`,`org_path`,`org_name`,`address`,`contact`,`phone`
+	</sql>
+	<!-- 查询 -->
+	<select id="findOne" resultMap="entityResultMap" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM sys_organization
+		WHERE id = #{id}
+	</select>
+	<!-- 查询列表 -->
+	<select id="findAll" resultMap="entityResultMap" parameterType="com.onesuo.app.model.query.OrganizationQuery">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM sys_organization
+		<if test="sortColumn != null and sortColumn != ''">
+			order by ${sortColumn}
+		</if>
+		<if test="null != pgIndex and null != pgCount">
+			limit ${pgIndex*pgCount}, #{pgCount}
+		</if>
+	</select>
+	<!-- 查询数量 -->
+	<select id="count" resultType="java.lang.Integer" parameterType="com.onesuo.app.model.query.OrganizationQuery">
+		SELECT count(*) FROM sys_organization
+	</select>
+	<!-- 保存 -->
+	<insert id="save" parameterType="com.onesuo.app.model.Organization" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO sys_organization
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="isDeleted != null" >
+				is_deleted,
+			</if>
+			<if test="gmtCreate != null" >
+				gmt_create,
+			</if>
+			<if test="gmtModified != null" >
+				gmt_modified,
+			</if>
+			<if test="parentId != null" >
+				parent_id,
+			</if>
+			<if test="orgPath != null" >
+				org_path,
+			</if>
+			<if test="orgName != null" >
+				org_name,
+			</if>
+			<if test="address != null" >
+				address,
+			</if>
+			<if test="contact != null" >
+				contact,
+			</if>
+			<if test="phone != null" >
+				phone,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="isDeleted != null" >
+				#{isDeleted},
+			</if>
+			<if test="gmtCreate != null" >
+				#{gmtCreate},
+			</if>
+			<if test="gmtModified != null" >
+				#{gmtModified},
+			</if>
+			<if test="parentId != null" >
+				#{parentId},
+			</if>
+			<if test="orgPath != null" >
+				#{orgPath},
+			</if>
+			<if test="orgName != null" >
+				#{orgName},
+			</if>
+			<if test="address != null" >
+				#{address},
+			</if>
+			<if test="contact != null" >
+				#{contact},
+			</if>
+			<if test="phone != null" >
+				#{phone},
+			</if>
+		</trim>
+	</insert>
+	<!-- 更新 -->
+	<update id="update" parameterType="com.onesuo.app.model.Organization">
+		UPDATE sys_organization
+		<set>
+			<if test="isDeleted != null" >
+				is_deleted = #{isDeleted},
+			</if>
+			<if test="gmtCreate != null" >
+				gmt_create = #{gmtCreate},
+			</if>
+			<if test="gmtModified != null" >
+				gmt_modified = #{gmtModified},
+			</if>
+			<if test="parentId != null" >
+				parent_id = #{parentId},
+			</if>
+			<if test="orgPath != null" >
+				org_path = #{orgPath},
+			</if>
+			<if test="orgName != null" >
+				org_name = #{orgName},
+			</if>
+			<if test="address != null" >
+				address = #{address},
+			</if>
+			<if test="contact != null" >
+				contact = #{contact},
+			</if>
+			<if test="phone != null" >
+				phone = #{phone},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	<!-- 删除 -->
+	<update id="delete" parameterType="java.lang.Integer">
+		update sys_organization set is_deleted=1 where id = #{id}
+	</update>
+</mapper>

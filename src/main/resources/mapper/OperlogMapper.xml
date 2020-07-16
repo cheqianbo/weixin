@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- sys_operlog 操作日志 -->
+<mapper namespace="com.onesuo.app.dao.certs.OperlogDao">
+	<resultMap id="entityResultMap" type="com.onesuo.app.model.Operlog">
+		<id property="id" column="id" />
+		<result property="isDeleted" column="is_deleted" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+		<result property="userId" column="user_id" />
+		<result property="userIp" column="user_ip" />
+		<result property="module" column="module" />
+		<result property="className" column="className" />
+		<result property="methodName" column="methodName" />
+		<result property="flag" column="flag" />
+		<result property="detail" column="detail" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+		`id`,`is_deleted`,`gmt_create`,`gmt_modified`,`user_id`,`user_ip`,`module`,`className`,`methodName`,`flag`,`detail`
+	</sql>
+	<!-- 查询 -->
+	<select id="findOne" resultMap="entityResultMap" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM sys_operlog
+		WHERE id = #{id}
+	</select>
+	<!-- 查询列表 -->
+	<select id="findAll" resultMap="entityResultMap" parameterType="com.onesuo.app.model.query.OperlogQuery">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM sys_operlog
+		<if test="sortColumn != null and sortColumn != ''">
+			order by ${sortColumn}
+		</if>
+		<if test="null != pgIndex and null != pgCount">
+			limit ${pgIndex*pgCount}, #{pgCount}
+		</if>
+	</select>
+	<!-- 查询数量 -->
+	<select id="count" resultType="java.lang.Integer" parameterType="com.onesuo.app.model.query.OperlogQuery">
+		SELECT count(*) FROM sys_operlog
+	</select>
+	<!-- 保存 -->
+	<insert id="save" parameterType="com.onesuo.app.model.Operlog" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO sys_operlog
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="isDeleted != null" >
+				is_deleted,
+			</if>
+			<if test="gmtCreate != null" >
+				gmt_create,
+			</if>
+			<if test="gmtModified != null" >
+				gmt_modified,
+			</if>
+			<if test="userId != null" >
+				user_id,
+			</if>
+			<if test="userIp != null" >
+				user_ip,
+			</if>
+			<if test="module != null" >
+				module,
+			</if>
+			<if test="className != null" >
+				className,
+			</if>
+			<if test="methodName != null" >
+				methodName,
+			</if>
+			<if test="flag != null" >
+				flag,
+			</if>
+			<if test="detail != null" >
+				detail,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="isDeleted != null" >
+				#{isDeleted},
+			</if>
+			<if test="gmtCreate != null" >
+				#{gmtCreate},
+			</if>
+			<if test="gmtModified != null" >
+				#{gmtModified},
+			</if>
+			<if test="userId != null" >
+				#{userId},
+			</if>
+			<if test="userIp != null" >
+				#{userIp},
+			</if>
+			<if test="module != null" >
+				#{module},
+			</if>
+			<if test="className != null" >
+				#{className},
+			</if>
+			<if test="methodName != null" >
+				#{methodName},
+			</if>
+			<if test="flag != null" >
+				#{flag},
+			</if>
+			<if test="detail != null" >
+				#{detail},
+			</if>
+		</trim>
+	</insert>
+	<!-- 更新 -->
+	<update id="update" parameterType="com.onesuo.app.model.Operlog">
+		UPDATE sys_operlog
+		<set>
+			<if test="isDeleted != null" >
+				is_deleted = #{isDeleted},
+			</if>
+			<if test="gmtCreate != null" >
+				gmt_create = #{gmtCreate},
+			</if>
+			<if test="gmtModified != null" >
+				gmt_modified = #{gmtModified},
+			</if>
+			<if test="userId != null" >
+				user_id = #{userId},
+			</if>
+			<if test="userIp != null" >
+				user_ip = #{userIp},
+			</if>
+			<if test="module != null" >
+				module = #{module},
+			</if>
+			<if test="className != null" >
+				className = #{className},
+			</if>
+			<if test="methodName != null" >
+				methodName = #{methodName},
+			</if>
+			<if test="flag != null" >
+				flag = #{flag},
+			</if>
+			<if test="detail != null" >
+				detail = #{detail},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	<!-- 删除 -->
+	<update id="delete" parameterType="java.lang.Integer">
+		update sys_operlog set is_deleted=1 where id = #{id}
+	</update>
+</mapper>

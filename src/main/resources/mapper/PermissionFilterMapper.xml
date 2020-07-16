@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- sys_permission_filter shiro配置 -->
+<mapper namespace="com.onesuo.app.dao.certs.PermissionFilterDao">
+	<resultMap id="entityResultMap" type="com.onesuo.app.model.PermissionFilter">
+		<id property="id" column="id" />
+		<result property="isDeleted" column="is_deleted" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+		<result property="filterUrl" column="filter_url" />
+		<result property="filterPermission" column="filter_permission" />
+		<result property="filterSort" column="filter_sort" />
+		<result property="filterDesc" column="filter_desc" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+		`id`,`is_deleted`,`gmt_create`,`gmt_modified`,`filter_url`,`filter_permission`,`filter_sort`,`filter_desc`
+	</sql>
+	<!-- 查询 -->
+	<select id="findOne" resultMap="entityResultMap" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM sys_permission_filter
+		WHERE id = #{id}
+	</select>
+	<!-- 查询列表 -->
+	<select id="findAll" resultMap="entityResultMap" parameterType="com.onesuo.app.model.query.PermissionFilterQuery">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM sys_permission_filter
+		<if test="sortColumn != null and sortColumn != ''">
+			order by ${sortColumn}
+		</if>
+		<if test="null != pgIndex and null != pgCount">
+			limit ${pgIndex*pgCount}, #{pgCount}
+		</if>
+	</select>
+	<!-- 查询数量 -->
+	<select id="count" resultType="java.lang.Integer" parameterType="com.onesuo.app.model.query.PermissionFilterQuery">
+		SELECT count(*) FROM sys_permission_filter
+	</select>
+	<!-- 保存 -->
+	<insert id="save" parameterType="com.onesuo.app.model.PermissionFilter" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO sys_permission_filter
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="isDeleted != null" >
+				is_deleted,
+			</if>
+			<if test="gmtCreate != null" >
+				gmt_create,
+			</if>
+			<if test="gmtModified != null" >
+				gmt_modified,
+			</if>
+			<if test="filterUrl != null" >
+				filter_url,
+			</if>
+			<if test="filterPermission != null" >
+				filter_permission,
+			</if>
+			<if test="filterSort != null" >
+				filter_sort,
+			</if>
+			<if test="filterDesc != null" >
+				filter_desc,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="isDeleted != null" >
+				#{isDeleted},
+			</if>
+			<if test="gmtCreate != null" >
+				#{gmtCreate},
+			</if>
+			<if test="gmtModified != null" >
+				#{gmtModified},
+			</if>
+			<if test="filterUrl != null" >
+				#{filterUrl},
+			</if>
+			<if test="filterPermission != null" >
+				#{filterPermission},
+			</if>
+			<if test="filterSort != null" >
+				#{filterSort},
+			</if>
+			<if test="filterDesc != null" >
+				#{filterDesc},
+			</if>
+		</trim>
+	</insert>
+	<!-- 更新 -->
+	<update id="update" parameterType="com.onesuo.app.model.PermissionFilter">
+		UPDATE sys_permission_filter
+		<set>
+			<if test="isDeleted != null" >
+				is_deleted = #{isDeleted},
+			</if>
+			<if test="gmtCreate != null" >
+				gmt_create = #{gmtCreate},
+			</if>
+			<if test="gmtModified != null" >
+				gmt_modified = #{gmtModified},
+			</if>
+			<if test="filterUrl != null" >
+				filter_url = #{filterUrl},
+			</if>
+			<if test="filterPermission != null" >
+				filter_permission = #{filterPermission},
+			</if>
+			<if test="filterSort != null" >
+				filter_sort = #{filterSort},
+			</if>
+			<if test="filterDesc != null" >
+				filter_desc = #{filterDesc},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	<!-- 删除 -->
+	<update id="delete" parameterType="java.lang.Integer">
+		update sys_permission_filter set is_deleted=1 where id = #{id}
+	</update>
+</mapper>

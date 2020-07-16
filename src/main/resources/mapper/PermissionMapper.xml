@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- sys_permission 权限 -->
+<mapper namespace="com.onesuo.app.dao.certs.PermissionDao">
+	<resultMap id="entityResultMap" type="com.onesuo.app.model.Permission">
+		<id property="id" column="id" />
+		<result property="isDeleted" column="is_deleted" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModified" column="gmt_modified" />
+		<result property="parentId" column="parent_id" />
+		<result property="permName" column="perm_name" />
+		<result property="permission" column="permission" />
+		<result property="icon" column="icon" />
+		<result property="type" column="type" />
+		<result property="sort" column="sort" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+		`id`,`is_deleted`,`gmt_create`,`gmt_modified`,`parent_id`,`perm_name`,`permission`,`icon`,`type`,`sort`
+	</sql>
+	<!-- 查询 -->
+	<select id="findOne" resultMap="entityResultMap" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM sys_permission
+		WHERE id = #{id}
+	</select>
+	<!-- 查询列表 -->
+	<select id="findAll" resultMap="entityResultMap" parameterType="com.onesuo.app.model.query.PermissionQuery">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM sys_permission
+		<if test="sortColumn != null and sortColumn != ''">
+			order by ${sortColumn}
+		</if>
+		<if test="null != pgIndex and null != pgCount">
+			limit ${pgIndex*pgCount}, #{pgCount}
+		</if>
+	</select>
+	<!-- 查询数量 -->
+	<select id="count" resultType="java.lang.Integer" parameterType="com.onesuo.app.model.query.PermissionQuery">
+		SELECT count(*) FROM sys_permission
+	</select>
+	<!-- 保存 -->
+	<insert id="save" parameterType="com.onesuo.app.model.Permission" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO sys_permission
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="isDeleted != null" >
+				is_deleted,
+			</if>
+			<if test="gmtCreate != null" >
+				gmt_create,
+			</if>
+			<if test="gmtModified != null" >
+				gmt_modified,
+			</if>
+			<if test="parentId != null" >
+				parent_id,
+			</if>
+			<if test="permName != null" >
+				perm_name,
+			</if>
+			<if test="permission != null" >
+				permission,
+			</if>
+			<if test="icon != null" >
+				icon,
+			</if>
+			<if test="type != null" >
+				type,
+			</if>
+			<if test="sort != null" >
+				sort,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="isDeleted != null" >
+				#{isDeleted},
+			</if>
+			<if test="gmtCreate != null" >
+				#{gmtCreate},
+			</if>
+			<if test="gmtModified != null" >
+				#{gmtModified},
+			</if>
+			<if test="parentId != null" >
+				#{parentId},
+			</if>
+			<if test="permName != null" >
+				#{permName},
+			</if>
+			<if test="permission != null" >
+				#{permission},
+			</if>
+			<if test="icon != null" >
+				#{icon},
+			</if>
+			<if test="type != null" >
+				#{type},
+			</if>
+			<if test="sort != null" >
+				#{sort},
+			</if>
+		</trim>
+	</insert>
+	<!-- 更新 -->
+	<update id="update" parameterType="com.onesuo.app.model.Permission">
+		UPDATE sys_permission
+		<set>
+			<if test="isDeleted != null" >
+				is_deleted = #{isDeleted},
+			</if>
+			<if test="gmtCreate != null" >
+				gmt_create = #{gmtCreate},
+			</if>
+			<if test="gmtModified != null" >
+				gmt_modified = #{gmtModified},
+			</if>
+			<if test="parentId != null" >
+				parent_id = #{parentId},
+			</if>
+			<if test="permName != null" >
+				perm_name = #{permName},
+			</if>
+			<if test="permission != null" >
+				permission = #{permission},
+			</if>
+			<if test="icon != null" >
+				icon = #{icon},
+			</if>
+			<if test="type != null" >
+				type = #{type},
+			</if>
+			<if test="sort != null" >
+				sort = #{sort},
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	<!-- 删除 -->
+	<update id="delete" parameterType="java.lang.Integer">
+		update sys_permission set is_deleted=1 where id = #{id}
+	</update>
+</mapper>
