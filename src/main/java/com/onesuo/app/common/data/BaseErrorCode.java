@@ -4,6 +4,7 @@ package com.onesuo.app.common.data;
  * 错误码
  */
 public class BaseErrorCode {
+
 	public final static int OK = 200;
 	public final static String OK_MSG = "";
 	public final static int BAD_REQUEST_FORMAT = 400;
